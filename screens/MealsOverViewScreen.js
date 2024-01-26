@@ -1,9 +1,10 @@
-import { FlatList, View, StyleSheet, Text } from 'react-native';
+import { useLayoutEffect } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 // import { useRoute } from '@react-navigation/native'; // we can use this in case we don't need props
-import { MEALS } from '../data/dummy-data';
 import MealItem from '../components/MealItem';
+import { CATEGORIES, MEALS } from '../data/dummy-data';
 
-function MealsOverViewScreen({ route }) {
+function MealsOverViewScreen({ route, navigation }) {
   // const route = useRoute();
   // const { categoryId } = route.params;
   const { categoryId } = route.params;
@@ -11,6 +12,17 @@ function MealsOverViewScreen({ route }) {
   const displayedMeals = MEALS.filter((mealItem) => {
     return mealItem.categoryIds.includes(categoryId);
   });
+
+  useLayoutEffect(() => {
+    const categoryTitle = CATEGORIES.find(
+      (category) => category.id === categoryId
+    ).title;
+
+    navigation.setOptions({
+      title: categoryTitle,
+      headerBackTitleVisible: false,
+    });
+  }, [categoryId, navigation]);
 
   function renderMealItem(itemData) {
     const item = itemData.item;
