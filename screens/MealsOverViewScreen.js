@@ -13,7 +13,17 @@ function MealsOverViewScreen({ route }) {
   });
 
   function renderMealItem(itemData) {
-    return <MealItem title={itemData.item.title} />;
+    const item = itemData.item;
+
+    const MealItemProps = {
+      title: item.title,
+      imageUrl: item.imageUrl,
+      affordability: item.affordability,
+      complexity: item.complexity,
+      duration: item.duration,
+    };
+
+    return <MealItem {...MealItemProps} />;
   }
 
   return (
