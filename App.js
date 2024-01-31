@@ -17,7 +17,7 @@ function DrawerNavigator() {
       screenOptions={{
         headerStyle: { backgroundColor: '#351401' },
         headerTintColor: 'white',
-        contentStyle: { backgroundColor: '#3f2f25' },
+        sceneContainerStyle: { backgroundColor: '#3f2f25' },
       }}
     >
       <Drawer.Screen
@@ -54,7 +54,13 @@ export default function App() {
             }}
           />
           <Stack.Screen name="MealsOverview" component={MealsOverViewScreen} />
-          <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
+          <Stack.Screen
+            name="MealDetails"
+            component={MealDetailsScreen}
+            options={{
+              title: 'About the Meal',
+            }}
+          />
         </Stack.Navigator>
         {/* <CategoriesScreen /> */}
       </NavigationContainer>
