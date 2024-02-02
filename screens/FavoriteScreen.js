@@ -1,58 +1,56 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
+import MealsList from '../components/mealsList/MealsList';
+import { useContext } from 'react';
+import { FavoritesContext } from '../store/context/favorites-context';
+import { MEALS } from '../data/dummy-data';
 
 function FavoriteScreen() {
-  return (
-    <View style={styles.outerContainer}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Food</Text>
-      </View>
-      {/* <View style={styles.cardContainer}>
-        <View>
-          <Image
-            source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-            }}
-            style={styles.cardImage}
-          />
-        </View>
-        <View>
-          <Text>Favorite Meal</Text>
-          <Text>MiniTitle</Text>
-          <Text>rating</Text>
-          <Text>price</Text>
-        </View>
-      </View> */}
-    </View>
+  const favoriteMealCtx = useContext(FavoritesContext);
+
+  const favoriteMeals = MEALS.filter((meal) =>
+    favoriteMealCtx.ids.includes(meal.id)
   );
+
+  if (favoriteMeals.length === 0) {
+    return (
+      <View style={styles.rootContainer}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={require('../assets/no-search.jpg')}
+          />
+          <Text style={styles.text}>You have no favorite Meal</Text>
+        </View>
+      </View>
+    );
+  }
+
+  return <MealsList items={favoriteMeals} />;
 }
 
 export default FavoriteScreen;
 
 const styles = StyleSheet.create({
-  outerContainer: {
+  rootContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  titleContainer: {
-    width: 350,
-    height: 50,
-    margin: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#8f4814',
-    borderRadius: 45,
-  },
-  title: {
-    fontSize: 20,
+  text: {
+    fontSize: 18,
     fontWeight: 'bold',
-    alignSelf: 'center',
+    color: 'white',
   },
-  cardContainer: {
-    backgroundColor: '#e4a578',
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 70,
   },
-  cardImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+  image: {
+    marginVertical: 20,
+    width: 250,
+    height: 250,
+    borderRadius: 125,
   },
 });

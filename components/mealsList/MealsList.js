@@ -1,0 +1,38 @@
+import { View, FlatList, StyleSheet } from 'react-native';
+import MealItem from './MealItem';
+
+function MealsList({ items }) {
+  function renderMealItem(itemData) {
+    const item = itemData.item;
+
+    const MealItemProps = {
+      id: item.id,
+      title: item.title,
+      imageUrl: item.imageUrl,
+      affordability: item.affordability,
+      complexity: item.complexity,
+      duration: item.duration,
+    };
+
+    return <MealItem {...MealItemProps} />;
+  }
+
+  return (
+    <View style={styles.screen}>
+      <FlatList
+        data={items}
+        keyExtractor={(item) => item.id}
+        renderItem={renderMealItem}
+      />
+    </View>
+  );
+}
+
+export default MealsList;
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 16,
+  },
+});

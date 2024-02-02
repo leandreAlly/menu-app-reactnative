@@ -1,8 +1,9 @@
 import { useLayoutEffect } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 // import { useRoute } from '@react-navigation/native'; // we can use this in case we don't need props
-import MealItem from '../components/MealItem';
+import MealItem from '../components/mealsList/MealItem';
 import { CATEGORIES, MEALS } from '../data/dummy-data';
+import MealsList from '../components/mealsList/MealsList';
 
 function MealsOverViewScreen({ route, navigation }) {
   // const route = useRoute();
@@ -24,37 +25,7 @@ function MealsOverViewScreen({ route, navigation }) {
     });
   }, [categoryId, navigation]);
 
-  function renderMealItem(itemData) {
-    const item = itemData.item;
-
-    const MealItemProps = {
-      id: item.id,
-      title: item.title,
-      imageUrl: item.imageUrl,
-      affordability: item.affordability,
-      complexity: item.complexity,
-      duration: item.duration,
-    };
-
-    return <MealItem {...MealItemProps} />;
-  }
-
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMealItem}
-      />
-    </View>
-  );
+  return <MealsList items={displayedMeals} />;
 }
 
 export default MealsOverViewScreen;
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    padding: 16,
-  },
-});
